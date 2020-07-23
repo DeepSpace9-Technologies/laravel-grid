@@ -22,7 +22,10 @@ class TFoot extends HtmlTag
     {
         if (version_compare(Application::VERSION, '5', '<')) {
             $pagerClass = 'Nayjest\Grids\Components\Pager';
-        } else {
+        } elseif (version_compare(Application::VERSION, '6', '>=')) {
+            $pagerClass = 'Nayjest\Grids\Components\Laravel6\Pager';
+        }
+        else {
             $pagerClass = 'Nayjest\Grids\Components\Laravel5\Pager';
         }
         return [
