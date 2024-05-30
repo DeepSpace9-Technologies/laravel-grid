@@ -16,6 +16,7 @@ abstract class DataProvider
     protected $page_size = 100;
 
     protected $current_page = 1;
+    protected $dateRange;
 
     /**
      * Constructor.
@@ -48,6 +49,24 @@ abstract class DataProvider
     {
         $this->page_size = $pageSize;
         return $this;
+    }
+
+    public function setGridDefaultDateRangeFilter($columnName, $monthCount)
+    {
+        $this->dateRange = [$columnName, (int)$monthCount];
+        return $this;
+    }
+
+
+    public function setGridDateRangeFilter($columnName, $dateRange)
+    {
+        $this->dateRange = [$columnName, $dateRange];
+        return $this;
+    }
+
+    public function getGridDateRangeFilter()
+    {
+        return $this->dateRange;
     }
 
     /**
@@ -97,6 +116,8 @@ abstract class DataProvider
      * @return $this
      */
     abstract public function filter($fieldName, $operator, $value);
+
+    abstract public function dateTimeRangeFilter($relation, $fieldName, array $value);
 
     /**
      * Returns collection of raw data items.

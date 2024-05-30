@@ -39,6 +39,8 @@ class GridConfig implements RegistryInterface
 
     protected $row_component;
 
+    protected $dateRange;
+
     /**
      * @return RenderableComponentInterface
      */
@@ -254,5 +256,16 @@ class GridConfig implements RegistryInterface
     public function getDefaultSort()
     {
         return $this->defaultSort;
+    }
+
+    public function setGridDateRangeFilter($columnName, $dateRange)
+    {
+        $this->dateRange = [$columnName, $dateRange];
+        return $this;
+    }
+
+    public function getGridDateRangeFilter()
+    {
+        return $this->dateRange;
     }
 }

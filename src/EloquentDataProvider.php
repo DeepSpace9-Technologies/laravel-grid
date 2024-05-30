@@ -123,4 +123,12 @@ class EloquentDataProvider extends DataProvider
         $this->src->where($fieldName, $operator, $value);
         return $this;
     }
+
+    public function dateTimeRangeFilter($relation, $fieldName, array $value)
+    {
+        $this->src->whereHas($relation, function ($query) use ($fieldName, $value) {
+            $query->whereBetween($fieldName, $value);
+        });
+        return $this;
+    }
 }

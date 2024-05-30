@@ -179,4 +179,12 @@ class DbalDataProvider extends DataProvider
         $this->exec_using_laravel = $execUsingLaravel;
     }
 
+    public function dateTimeRangeFilter($relation, $fieldName, array $value)
+    {
+        $this->src->whereHas($relation, function ($query) use ($fieldName, $value) {
+            $query->whereBetween($fieldName, $value);
+        });
+        return $this;
+    }
+
 }

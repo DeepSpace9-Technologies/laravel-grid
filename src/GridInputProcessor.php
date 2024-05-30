@@ -1,6 +1,7 @@
 <?php
 namespace Nayjest\Grids;
 
+use Illuminate\Support\Facades\Log;
 use Input;
 use Request;
 use Form;
@@ -67,7 +68,7 @@ class GridInputProcessor
      */
     public function getSorting()
     {
-        return $_ =& $this->input['sort'];
+        return $this->input['sort'];
     }
 
     public function getSortingHiddenInputsHtml()
@@ -127,13 +128,13 @@ class GridInputProcessor
         if (isset($this->input['filters']) && array_key_exists($filterName, $this->input['filters'])) {
             if (isset($this->input['filters'][$filterName])) {
                 $value = $this->input['filters'][$filterName];
-                setcookie($cookieName, $value, time()+60*60*24*7);
+                $encodedValue = json_encode($value);
+                setcookie($cookieName, $encodedValue, time() + 60 * 60 * 24 * 7);
                 return $value;
             }
             setcookie($cookieName);
-        }
-        else if (isset($_COOKIE[$cookieName])) {
-            return $_COOKIE[$cookieName];
+        } else if (isset($_COOKIE[$cookieName])) {
+            return json_decode($_COOKIE[$cookieName], true);
         }
         return null;
     }

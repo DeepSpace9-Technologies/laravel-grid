@@ -1,17 +1,7 @@
 Grids
 =====
 
-Grids framework for Laravel
-
-[![Codacy Badge](https://www.codacy.com/project/badge/4c6955da466a45c1a64972bbfb81fcb7)](https://www.codacy.com/public/mail_2/Grids)
-[![Code Climate](https://codeclimate.com/github/Nayjest/Grids/badges/gpa.svg)](https://codeclimate.com/github/Nayjest/Grids)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Nayjest/Grids/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Nayjest/Grids/?branch=master)
-[![Circle CI](https://circleci.com/gh/Nayjest/Grids/tree/master.svg?style=svg)](https://circleci.com/gh/Nayjest/Grids/tree/master)
-[![Release](https://img.shields.io/packagist/v/nayjest/grids.svg)](https://packagist.org/packages/nayjest/grids)
-[![HHVM Status](http://hhvm.h4cc.de/badge/nayjest/grids.svg)](http://hhvm.h4cc.de/package/nayjest/grids)
-[![Join the chat at https://gitter.im/Nayjest/Grids](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Nayjest/Grids?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Both Laravel 4 and Laravel 5 are supported.
+Laravel Grids framework for Laravel
 
 ## Features
 * Data providers (php array, Eloquent model, Doctrine DBAL query object)
@@ -34,13 +24,16 @@ Both Laravel 4 and Laravel 5 are supported.
   - Pagination
   - etc
 
+## Additional Features
+  - Multi Select Filter option to the grids Column.
+  - Multi Search Filter option to the Grids Column.
+  - Custom Date Range Filter to the Entire Grid Data (Limit Your Data with Custom Date Range).
+
 ## Upcoming Features
 * Autodetecting columns based on Eloquent model (if not specified)
 * Builtin output formatters for different column types
 * Working with json data sources via ajax
 * Check compatibility with Lumen microframework
-
-[Ask for more features](https://github.com/Nayjest/Grids/issues). You are welcome!
 
 ## Requirements
 
@@ -52,11 +45,11 @@ Both Laravel 4 and Laravel 5 are supported.
 
 ##### Step 1: Install package using [Composer](https://getcomposer.org)
 
-Add nayjest/grids to "require" section of your composer.json
+Add package/laravel-grids to "require" section of your composer.json
 
 ```javascript
 "require": {
-    "nayjest/grids": "~0.9"
+    "package/laravel-grids": "~0.9"
 },
 ```
 
@@ -64,7 +57,7 @@ For Laravel 5 you also need to add "laravelcollective/html":
 
 ```javascript
 "require": {
-    "nayjest/grids": "~0.9",
+    "package/laravel-grids": "~0.9",
     "laravelcollective/html": "~5.0"
 },
 ```
@@ -78,11 +71,11 @@ Instead of editing composer.json and executing _composer install_ you can just r
 
 For Laravel 4
 ```bash    
-php composer.phar require nayjest/grids
+php composer.phar require deepspace9/laravel-grids
 ```
 For Laravel 5
 ```bash    
-php composer.phar require nayjest/grids illuminate/html
+php composer.phar require package/laravel-grids illuminate/html
 ```
 
 ##### Step 2: Laravel Setup
@@ -102,11 +95,6 @@ You may also add facade aliases to your application configuration:
     'HTML'  => 'Collective\Html\HtmlFacade',
     'Grids'     => 'Nayjest\Grids\Grids',
 ```
-## Demo
-
-Demonstration available [here](http://grids-demo.herokuapp.com/demo/example4)
-
-[Code](https://github.com/Nayjest/grids-demo)
 
 
 
@@ -415,22 +403,3 @@ Example:
 
 Note that setComponents method rewrites components structure provided by defaults.
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email mail@vitaliy.in instead of using the issue tracker.
-
-## License
-
-© 2014 &mdash; 2015 Vitalii Stepanenko
-
-Licensed under the MIT License. 
-
-Please see [License File](LICENSE) for more information.
-
-##
-
-[![Flag Counter](http://s07.flagcounter.com/count/0LAb/bg_FFFFFF/txt_000000/border_FFFFFF/columns_8/maxflags_8/viewers_0/labels_0/pageviews_0/flags_0/percent_1/)](http://info.flagcounter.com/0LAb)

@@ -30,6 +30,10 @@ class Grid
 
     protected $filtering;
 
+    /** @var  FilterGridWithDateRange */
+    protected $filterGridByDateRange;
+
+
     public function __construct(GridConfig $config)
     {
         $this->config = $config;
@@ -67,6 +71,7 @@ class Grid
         $this->getFiltering()->apply();
         $this->prepareColumns();
         $this->getSorter()->apply();
+        $this->getFilterGridByDateRange()->apply();
         event(self::EVENT_PREPARE, $this);
         $this->prepared = true;
     }
@@ -141,6 +146,14 @@ class Grid
             $this->sorter = new Sorter($this);
         }
         return $this->sorter;
+    }
+
+    public function getFilterGridByDateRange()
+    {
+        if (null === $this->filterGridByDateRange) {
+            $this->filterGridByDateRange = new FilterGridWithDateRange($this);
+        }
+        return $this->filterGridByDateRange;
     }
 
     /**
