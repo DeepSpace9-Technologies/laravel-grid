@@ -19,27 +19,11 @@ Laravel Grids framework for Laravel
   - _Records per page_ dropdown
   - Show/hide columns UI control
   - Sorting 
-  - Filtering 
+  - Filtering/Multi Select Filtering
+  - Search Filter/Multi Search Filter (value should be (,) seperated)
   - Totals calculation (sum, average value, records count, etc)
   - Pagination
   - etc
-
-## Additional Features
-  - Multi Select Filter option to the grids Column.
-  - Multi Search Filter option to the Grids Column.
-  - Custom Date Range Filter to the Entire Grid Data (Limit Your Data with Custom Date Range).
-
-## Upcoming Features
-* Autodetecting columns based on Eloquent model (if not specified)
-* Builtin output formatters for different column types
-* Working with json data sources via ajax
-* Check compatibility with Lumen microframework
-
-## Requirements
-
-* Laravel 4.X / 5.X
-* laravelcollective/html package if you use Laravel5.X
-* php 5.4+
 
 ## Installation
 
@@ -191,6 +175,15 @@ $grid = new Grid(
                     (new SelectFilterConfig)
                         ->setName('country')
                         ->setOptions(get_countries_list())
+                )
+            ,
+            (new FieldConfig)
+                ->setName('name')
+                ->setLabel('name')
+                ->addFilter(
+                    (new MultiSelectFilterConfig())
+                        ->setName('name')
+                        ->setOptions(get_name_list())
                 )
             ,
             (new FieldConfig)
