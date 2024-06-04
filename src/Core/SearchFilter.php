@@ -12,21 +12,25 @@ class SearchFilter extends Filter
     public function __construct($columnName, $relation, $operator)
     {
         $config = new FilterConfig();
-        $config->setName($relation.".".$columnName);
+        $name = !empty($relation) ? $relation.".".$columnName : $columnName;
+        $config->setName($name);
         $config->setOperator($operator);
         parent::__construct($config);
-        if ($relation) {
-            $this->setDefaultFilteringFunc($columnName, $relation);
-        }
+        $this->setDefaultFilteringFunc($columnName, $relation);
     }
 
     private function setDefaultFilteringFunc($columnName, $relation)
     {
         $this->setFilteringFunc(function ($val, EloquentDataProvider $dp) use ($columnName, $relation) {
             $builder = $dp->getBuilder();
-            $builder->whereHas($relation, function ($query) use ($columnName, $val) {
-                $query->whereIn($columnName, explode(',', trim($val)));
-            });
+            $val = str_replace(' ', '', $val);
+            if ($relation) {
+                $builder->whereHas($relation, function ($query) use ($columnName, $val) {
+                    $query->whereIn($columnName, explode(',', trim(str_replace(' ', '', $val))));
+                });
+            } else {
+                $builder->whereIn($columnName, explode(',', trim(str_replace(' ', '', $val))));
+            }
         });
         return $this;
     }
