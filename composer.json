@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Deepspace9\\Grids\\": "src/"
+            "Nayjest\\Grids\\": "src/"
         }
     }
 }
