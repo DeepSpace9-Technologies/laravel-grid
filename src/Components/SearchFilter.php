@@ -1,9 +1,8 @@
 <?php
 
-namespace Nayjest\Grids\Core;
+namespace Nayjest\Grids\Components;
 
-use Nayjest\Grids\Core\Filter;
-use Nayjest\Grids\Core;
+use Nayjest\Grids\Components\Filter;
 use Nayjest\Grids\FilterConfig;
 use Nayjest\Grids\EloquentDataProvider;
 
@@ -12,7 +11,7 @@ class SearchFilter extends Filter
     public function __construct($columnName, $relation, $operator)
     {
         $config = new FilterConfig();
-        $name = !empty($relation) ? $relation.".".$columnName : $columnName;
+        $name = !empty($relation) ? $relation . "." . $columnName : $columnName;
         $config->setName($name);
         $config->setOperator($operator);
         parent::__construct($config);

@@ -1,7 +1,9 @@
 <?php
+
 namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
+use Nayjest\Grids\Components\HtmlTag as NayTag;
 
 class HtmlTag extends RenderableRegistry
 {
@@ -118,9 +120,9 @@ class HtmlTag extends RenderableRegistry
         /** @var \Collective\Html\HtmlBuilder $html */
         $html = app('html');
         return '<'
-        . $this->getTagName()
-        . $html->attributes($this->getAttributes())
-        . '>';
+            . $this->getTagName()
+            . $html->attributes($this->getAttributes())
+            . '>';
     }
 
     /**
@@ -150,6 +152,122 @@ class HtmlTag extends RenderableRegistry
                 . $this->renderClosingTag();
         }
         return $this->wrapWithOutsideComponents($inner);
+    }
+
+    public function createHtmlTag()
+    {
+        return new NayTag();
+    }
+
+    public function addClass($className)
+    {
+        $attributes = $this->getAttributes();
+        $class = array_key_exists("class", $attributes) ? $attributes['class'] : '';
+        $class = $class . " " . $className;
+        $attributes['class'] = $class;
+        $this->setAttributes($attributes);
+        return $this;
+    }
+
+    public function addExcelExport($fileName)
+    {
+        $excelExport = (new ExcelExport())->setFileName($fileName);
+        $this->addComponent($excelExport);
+        return $this;
+    }
+
+    public function addCsvExport($fileName)
+    {
+        $excelExport = (new CsvExport())->setFileName($fileName);
+        $this->addComponent($excelExport);
+        return $this;
+    }
+
+    public function addColumnsHider()
+    {
+        $columnsHider = new ColumnsHider;
+        $this->addComponent($columnsHider);
+        return $this;
+    }
+
+    public function addRecordsPerPage($variants = [])
+    {
+        $recordsPerPage = new RecordsPerPage;
+        if ($variants) {
+            $recordsPerPage->setVariants($variants);
+        }
+        $this->addComponent($recordsPerPage);
+        return $this;
+    }
+
+    public function addShowingRecords()
+    {
+        $showingRecords = new ShowingRecords;
+        $this->addComponent($showingRecords);
+        return $this;
+    }
+
+    public function addResetButton()
+    {
+        $resetButton = (new NayTag())
+            ->setContent('<i class="fa fa-refresh" aria-hidden="true"></i> Reset')
+            ->setTagName('button')
+            ->setAttributes([
+                'type' => 'button',
+                'class' => 'btn btn-success btn-sm grid-reset',
+            ]);
+        $this->addComponent($resetButton);
+        return $this;
+    }
+
+    public function addAction($action)
+    {
+        $action['class'] = empty($action['class']) ? 'action' : $action['class'] . ' action';
+        $actionButtonConfig = $this->createHtmlTag();
+        $content = (empty($action['href']) && !empty($action['button-class'])) ? '<button class="btn btn-small ' . $action['button-class'] . '" type="button">' . $action['name'] . '</button>' : '<a href="' . $action['href'] . '">' . $action['name'] . '</a>';
+        $actionButtonConfig->setContent($content)
+            ->setTagName('li')
+            ->setAttributes($action);
+        $this->addComponent($actionButtonConfig);
+    }
+
+    public function addActions($actions)
+    {
+        if (!empty($actions)) {
+            $dropdownWrapper = $this->createHtmlTag()->addClass('btn-group mr-5');
+            $dropdownWrapperConfig = $dropdownWrapper;
+            $dropdownButtonConfig = $this->createHtmlTag();
+            $dropdownButtonConfig->setContent('Actions <span class="fa fa-caret-down"></span>')
+                ->setTagName('button')
+                ->setAttributes([
+                    'type' => 'button',
+                    'class' => 'btn btn-sm btn-default bg-purple dropdown-toggle',
+                    'data-toggle' => 'dropdown',
+                    'aria-expanded' => 'false'
+                ]);
+
+            $dropdown = $this->createHtmlTag()->addClass("dropdown-menu bulk-actions");
+            foreach ($actions as $action) {
+                $dropdown->addAction($action);
+            }
+            $dropdownConfig = $dropdown;
+            $dropdownConfig->setTagName('ul');
+
+            // $dropdownWrapperConfig->setTagName('span');
+            $dropdownWrapperConfig->addComponent($dropdownButtonConfig);
+            $dropdownWrapperConfig->addComponent($dropdownConfig);
+            $this->addComponent($dropdownWrapperConfig);
+        }
+        return $this;
+    }
+
+    public function addRecordsPerMonth($defaultDateRange)
+    {
+        if (!empty($defaultDateRange)) {
+            $this->addComponent(new RecordsPerMonth());
+            return $this;
+        }
+        return $this;
     }
 }
 

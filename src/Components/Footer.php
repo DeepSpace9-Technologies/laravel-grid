@@ -1,9 +1,9 @@
 <?php
 
-namespace Nayjest\Grids\Core;
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\TFoot;
-use Nayjest\Grids\Core\Component;
+use Nayjest\Grids\Components\Component;
 use Nayjest\Grids\Components\Laravel5\Pager;
 
 class Footer extends Component

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nayjest\Grids\Core;
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\MultiSelectFilterConfig;
 use Nayjest\Grids\EloquentDataProvider;
@@ -21,7 +21,7 @@ class MultiSelectFilter extends Filter
     {
         $this->setFilteringFunc(function ($val, EloquentDataProvider $dp) use ($columnName, $relation) {
             $builder = $dp->getBuilder();
-            if (!empty($val) && is_array($val) &&  !empty($val[0])) {
+            if (!empty($val) && is_array($val) && !empty($val[0])) {
                 if ($relation) {
                     $builder->whereHas($relation, function ($query) use ($columnName, $val) {
                         $query->whereIn($columnName, $val);

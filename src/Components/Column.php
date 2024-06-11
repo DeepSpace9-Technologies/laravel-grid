@@ -1,14 +1,14 @@
 <?php
 
-namespace Nayjest\Grids\Core;
+namespace Nayjest\Grids\Components;
 
 use DateTime;
 use DateTimeZone;
-use Nayjest\Grids\Core;
-use Nayjest\Grids\Core\Filter;
-use Nayjest\Grids\Core\SearchFilter;
-use Nayjest\Grids\Core\SelectFilter;
-use Nayjest\Grids\Core\DateTimeRangeFilter;
+use Nayjest\Grids\Components\Filter;
+use Nayjest\Grids\Components\SearchFilter;
+use Nayjest\Grids\Components\SelectFilter;
+use Nayjest\Grids\Components\DateTimeRangeFilter;
+use Nayjest\Grids\Grid;
 use Nayjest\Grids\FieldConfig;
 use Nayjest\Grids\EloquentDataProvider;
 use Illuminate\Support\Collection;
@@ -126,7 +126,7 @@ class Column
     public function setMultiSelectFilter($options = [], $matchColumnName = null)
     {
         $columnName = $this->columnName;
-        if(!empty($matchColumnName)){
+        if (!empty($matchColumnName)) {
             $columnName = $matchColumnName;
         }
         $this->filter = new MultiSelectFilter($columnName, $this->relation, $options);

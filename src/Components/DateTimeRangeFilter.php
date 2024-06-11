@@ -1,6 +1,6 @@
 <?php
 
-namespace Nayjest\Grids\Core;
+namespace Nayjest\Grids\Components;
 
 use DateTime;
 use DateTimeZone;
@@ -12,7 +12,7 @@ class DateTimeRangeFilter extends Filter
     public function __construct($columnName, $relation, $operator)
     {
         $config = new DateTimeRangeFilterConfig();
-        $config->setName($relation.".".$columnName);
+        $config->setName($relation . "." . $columnName);
         $config->setLabel("test");
         $config->setOperator($operator);
         $config->set("config", $this->getPickerConfig());
@@ -20,7 +20,8 @@ class DateTimeRangeFilter extends Filter
         $this->setDefaultFilteringFunc($columnName, $relation);
     }
 
-    private function getPickerConfig(){
+    private function getPickerConfig()
+    {
         return [
             "autoClose" => true
         ];
@@ -36,7 +37,7 @@ class DateTimeRangeFilter extends Filter
             $dates[1] = (new DateTime($dates[1], new DateTimeZone("Asia/Kolkata")))->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
             if (empty($relation)) {
                 $builder->whereBetween($columnName, [$dates[0], $dates[1]]);
-            }else {
+            } else {
                 $builder->whereHas($relation, function ($query) use ($columnName, $dates) {
                     $query->whereBetween($columnName, [$dates[0], $dates[1]]);
                 });

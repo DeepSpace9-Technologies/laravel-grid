@@ -29,11 +29,11 @@ Laravel Grids framework for Laravel
 
 ##### Step 1: Install package using [Composer](https://getcomposer.org)
 
-Add package/laravel-grids to "require" section of your composer.json
+Add deepspace9/laravel-grids to "require" section of your composer.json
 
 ```javascript
 "require": {
-    "package/laravel-grids": "~0.9"
+    "deepspace9/laravel-grids": "1.0.0"
 },
 ```
 
@@ -41,7 +41,7 @@ For Laravel 5 you also need to add "laravelcollective/html":
 
 ```javascript
 "require": {
-    "package/laravel-grids": "~0.9",
+    "deepspace9/laravel-grids": "~0.9",
     "laravelcollective/html": "~5.0"
 },
 ```
@@ -59,7 +59,7 @@ php composer.phar require deepspace9/laravel-grids
 ```
 For Laravel 5
 ```bash    
-php composer.phar require package/laravel-grids illuminate/html
+php composer.phar require deepspace9/laravel-grids illuminate/html
 ```
 
 ##### Step 2: Laravel Setup

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nayjest\Grids\Core;
+namespace Nayjest\Grids\Components;
 
 class FormAttributes
 {

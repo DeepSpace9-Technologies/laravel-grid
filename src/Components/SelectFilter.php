@@ -1,20 +1,35 @@
 <?php
+
 namespace Nayjest\Grids\Components;
+
+use Illuminate\Support\Facades\Log;
+use Nayjest\Grids\Components\Filter;
+use Nayjest\Grids\FilterConfig;
+use Nayjest\Grids\SelectFilterConfig;
+use Nayjest\Grids\EloquentDataProvider;
 
 class SelectFilter extends Filter
 {
-    protected $variants = [];
-
-    protected $template = '*.components.filters.select';
-
-    public function getVariants()
+    public function __construct($columnName, $relation, $options)
     {
-        return $this->variants;
+        $config = new SelectFilterConfig();
+        $config->setOptions($options);
+        parent::__construct($config);
+        $this->setDefaultFilteringFunc($columnName, $relation);
     }
 
-    public function setVariants(array $variants)
+    private function setDefaultFilteringFunc($columnName, $relation = null)
     {
-        $this->variants = $variants;
+        $this->setFilteringFunc(function ($val, EloquentDataProvider $dp) use ($columnName, $relation) {
+            $builder = $dp->getBuilder();
+            if ($relation) {
+                $builder->whereHas($relation, function ($query) use ($columnName, $val) {
+                    $query->where($columnName, $val);
+                });
+            } else {
+                $builder->where($columnName, $val);
+            }
+        });
         return $this;
     }
 }
