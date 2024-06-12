@@ -3,6 +3,11 @@
 /** @var Nayjest\Grids\MultiSelectFilterConfig $cfg */
 $cfg = $filter->getConfig();
 ?>
+<style>
+    .select2-dropdown{
+        width: 200px !important;
+    }
+</style>
 <select
         class="form-control input-sm multi-select-option"
         name="<?= $filter->getInputName() . '[]' ?>" style="width: 100%" multiple
