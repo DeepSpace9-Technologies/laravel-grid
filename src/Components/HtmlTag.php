@@ -291,14 +291,14 @@ class HtmlTag extends RenderableRegistry
     public function setDefaultComponents()
     {
         $headerTag = $this->createHtmlTag()->addClass("row");
-        $leftTag = $this->createHtmlTag()->addClass("col-xs-6")
+        $leftTag = $this->createHtmlTag()->addClass("col-xs-7")
             ->addRecordsPerPage([10, 20, 50, 100, 200])
             ->addShowingRecords();
         if (!empty($this->defaultDateRange)) {
             $leftTag->addRecordsPerMonth([3, 6, 9, 12, 15]);
         }
 
-        $rightTag = $this->createHtmlTag()->addClass("col-xs-6 text-right")
+        $rightTag = $this->createHtmlTag()->addClass("col-xs-5 text-right")
             ->addActions($this->actions)
             ->addResetButton()
             ->addExcelExport('excel-data-' . date('d-m-Y-h-i-s'))
