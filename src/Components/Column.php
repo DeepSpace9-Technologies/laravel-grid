@@ -17,11 +17,13 @@ use Nayjest\Grids\Components\FiltersRow;
 
 class Column
 {
-    private $config;
-    private $grid;
-    private $columnName;
-    private $relation;
-    private $filter;
+    protected $config;
+
+    protected $grid;
+    protected $columnName;
+    protected $relation;
+
+    protected $filter;
 
     public function __construct($grid, $name, $label = null)
     {

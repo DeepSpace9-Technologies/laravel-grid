@@ -4,7 +4,7 @@ namespace Nayjest\Grids\Components;
 
 class FormAttributes
 {
-    private  $attributes=[];
+    protected $attributes=[];
 
     public function getAttributes()
     {

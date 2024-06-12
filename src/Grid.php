@@ -4,21 +4,17 @@ namespace Nayjest\Grids;
 
 use Event;
 use Cache;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Nayjest\Grids\Components\Column;
-use Nayjest\Grids\Components\Footer;
 use Nayjest\Grids\Components\FormAttributes;
-use Nayjest\Grids\Components\Header;
+use Nayjest\Grids\Components\HtmlTag;
 use Nayjest\Grids\Components\TFoot;
 use Nayjest\Grids\Components\THead;
-use Nayjest\Grids\Grid as NayGrid;
 use View;
 use Closure;
 
 class Grid
 {
-
     const SORT_ASC = 'ASC';
     const SORT_DESC = 'DESC';
 
@@ -49,35 +45,19 @@ class Grid
     /** @var  FilterGridWithDateRange */
     protected $filterGridByDateRange;
     private $actions = [];
-    private $hiddenColumns = [];
+    protected $hiddenColumns = [];
+    protected $sort = [];
 
 
-    public function __construct($params)
+    public function __construct(GridConfig $config)
     {
-        if ($params instanceof GridConfig) {
-
-            $this->config = $params;
-            if ($params->getName() === null) {
-                $this->provideName();
-            }
-            $this->initializeComponents();
-            event(self::EVENT_CREATE, $this);
-
-        } else if (is_object($params)) {
-
-            $this->config = new GridConfig();
-            $this->setDefaultPageSize(10);
-            $this->setDefaultSort(['id' => 'desc']);
-            $this->setDataSource($params);
+        $this->config = $config;
+        if ($config->getName() === null) {
+            $this->provideName();
         }
-    }
-
-    private function setDataSource($source)
-    {
-        $this->config->setDataProvider(
-            new EloquentDataProvider($source)
-        );
-        return $this;
+        $this->setDefaultPageSize(10);
+        $this->setDefaultSort(['id' => 'desc']);
+        event(self::EVENT_CREATE, $this);
     }
 
     /**
@@ -290,6 +270,12 @@ class Grid
      */
     public function render()
     {
+        $this->sort();
+        $header = new HtmlTag($this->config->getComponentByName(THead::NAME));
+        $header->setBulkActions($this->actions);
+        $header->setDefaultGridDateRangeFilter($this->config->getGridDateRangeFilter());
+        $header->setDefaultComponents();
+        $this->initializeComponents();
         $key = $this->getInputProcessor()->getUniqueRequestId();
         $caching_time = $this->config->getCachingTime();
         if ($caching_time && ($output = Cache::get($key))) {
@@ -307,19 +293,6 @@ class Grid
             }
             return $output;
         }
-    }
-
-    public function rendering()
-    {
-        $this->sort();
-        $header = new Header($this->config->getComponentByName(THead::NAME));
-        $header->setBulkActions($this->actions);
-        $header->setDefaultGridDateRangeFilter($this->config->getGridDateRangeFilter());
-        $header->setDefaultComponents();
-        new Footer($this->config->getComponentByName(TFoot::NAME));
-        $nayGrid = new self($this->config);
-
-        return $nayGrid->render();
     }
 
     /**
