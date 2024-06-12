@@ -37,7 +37,7 @@ class FilterGridWithDateRange
             $this->grid
                 ->getConfig()
                 ->getDataProvider()
-                ->dateTimeRangeFilter($relationAndColumnName[0], $relationAndColumnName[1], [$startDate, $endDate]);
+                ->dateTimeRangeFilter($relationAndColumnName, [$startDate, $endDate]);
         }
     }
 }
