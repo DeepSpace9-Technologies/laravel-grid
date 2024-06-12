@@ -117,7 +117,7 @@ abstract class DataProvider
      */
     abstract public function filter($fieldName, $operator, $value);
 
-    abstract public function dateTimeRangeFilter($relation, $fieldName, array $value);
+    abstract public function dateTimeRangeFilter($relationColumn, array $value);
 
     /**
      * Returns collection of raw data items.
