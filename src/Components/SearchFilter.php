@@ -22,12 +22,21 @@ class SearchFilter extends Filter
     {
         $this->setFilteringFunc(function ($val, EloquentDataProvider $dp) use ($columnName, $relation) {
             $builder = $dp->getBuilder();
+            $values = array_map('trim', explode(',', $val));
             if ($relation) {
-                $builder->whereHas($relation, function ($query) use ($columnName, $val) {
-                    $query->whereIn($columnName, array_map('trim', explode(',', $val)));
+                $builder->whereHas($relation, function ($query) use ($columnName, $values) {
+                    $query->where(function ($q) use ($columnName, $values) {
+                        foreach ($values as $value) {
+                            $q->orWhere($columnName, 'like', "%$value%");
+                        }
+                    });
                 });
             } else {
-                $builder->whereIn($columnName, array_map('trim', explode(',', $val)));
+                $builder->where(function ($q) use ($columnName, $values) {
+                    foreach ($values as $value) {
+                        $q->orWhere($columnName, 'like', "%$value%");
+                    }
+                });
             }
         });
         return $this;
