@@ -44,6 +44,7 @@ if (is_array($component->getValue())) {
             'Last 3 Months': [moment().subtract(3, 'months').startOf('day'), moment()],
             'Last 6 Months': [moment().subtract(6, 'months').startOf('day'), moment()],
             'Last 9 Months': [moment().subtract(9, 'months').startOf('day'), moment()],
+            'Last 1 Year': [moment().subtract(1, 'years').startOf('day'), moment()]
         }
     }, cb);
 
