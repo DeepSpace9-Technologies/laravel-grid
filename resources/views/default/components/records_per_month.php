@@ -1,7 +1,6 @@
 <span>Showing records from</span>
 <?php
 /** @var Nayjest\Grids\Components\RecordsPerMonth $component */
-
 if (is_array($component->getValue())) {
     $startDate = Carbon\Carbon::now()->subMonths((string)$component->getValue()[1])->format('d-m-Y');
     $endDate = Carbon\Carbon::now()->format('d-m-Y');
@@ -12,6 +11,7 @@ if (is_array($component->getValue())) {
     $endDate = Carbon\Carbon::parse($dates[1])->format('d-m-Y');
     $selectedDates = $startDate . ' to ' . $endDate;
 }
+$reportName = $component->getConfig()->getName();
 ?>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -28,6 +28,10 @@ if (is_array($component->getValue())) {
     var start = moment("<?= $startDate ?>", "DD-MM-YYYY");
     var end = moment("<?= $endDate ?>", "DD-MM-YYYY");
     var dateRangeSelector = $('#daterange');
+    var form = $('#daterange').closest('form');
+    var  loader = $('#loader');
+    var reportName = "<?= $reportName ?>"
+    var formElements = form.find('input, select, button, textarea, button');
 
     function cb(start, end) {
         $('#daterange span').html(start.format("MMM D, YYYY") + ' - ' + end.format("MMM D, YYYY"));
@@ -54,5 +58,16 @@ if (is_array($component->getValue())) {
     });
 
     cb(start, end);
+    $(document).ready(function(){
+        $(document).ajaxStart(function(){
+            $('#'+reportName).hide();
+            loader.show();
+        });
+
+        $(document).ajaxSuccess(function(){
+            $('#'+reportName).show();
+            loader.hide();
+        })
+    })
 </script>
 
