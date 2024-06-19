@@ -290,7 +290,10 @@ class HtmlTag extends RenderableRegistry
 
     public function setDefaultComponents()
     {
-        $headerTag = $this->createHtmlTag()->addClass("row mt-5");
+        $headerTag = $this->createHtmlTag()->addClass("row");
+        if (!empty($this->defaultDateRange)) {
+            $headerTag = $this->createHtmlTag()->addClass("row mt-5");
+        }
         $leftTag = $this->createHtmlTag()->addClass("col-xs-8")
             ->addRecordsPerPage([10, 20, 50, 100, 200])
             ->addShowingRecords();
