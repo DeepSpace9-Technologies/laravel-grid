@@ -21,7 +21,8 @@ $reportName = $component->getConfig()->getName();
 <span id="daterange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
     <i class="fa fa-calendar"></i>&nbsp;
     <span></span> <i class="fa fa-caret-down"></i>
-    <input type="hidden" class="selected-date" name="<?= $component->getInputName() ?>" value="<?= htmlspecialchars($selectedDates) ?>">
+    <input type="hidden" class="selected-date" name="<?= $component->getInputName() ?>"
+           value="<?= htmlspecialchars($selectedDates) ?>">
 </span>
 
 <script>
@@ -29,7 +30,7 @@ $reportName = $component->getConfig()->getName();
     var end = moment("<?= $endDate ?>", "DD-MM-YYYY");
     var dateRangeSelector = $('#daterange');
     var form = $('#daterange').closest('form');
-    var  loader = $('#loader');
+    var loader = $('#loader');
     var reportName = "<?= $reportName ?>"
     var formElements = form.find('input, select, button, textarea, button');
 
@@ -39,6 +40,8 @@ $reportName = $component->getConfig()->getName();
     }
 
     dateRangeSelector.daterangepicker({
+        startDate: start,
+        endDate: end,
         autoApply: true,
         autoclose: true,
         ranges: {
@@ -58,14 +61,14 @@ $reportName = $component->getConfig()->getName();
     });
 
     cb(start, end);
-    $(document).ready(function(){
-        $(document).ajaxStart(function(){
-            $('#'+reportName).hide();
+    $(document).ready(function () {
+        $(document).ajaxStart(function () {
+            $('#' + reportName).hide();
             loader.show();
         });
 
-        $(document).ajaxSuccess(function(){
-            $('#'+reportName).show();
+        $(document).ajaxSuccess(function () {
+            $('#' + reportName).show();
             loader.hide();
         })
     })
