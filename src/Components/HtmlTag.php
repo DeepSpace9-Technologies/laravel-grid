@@ -4,6 +4,7 @@ namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
 use Nayjest\Grids\Components\HtmlTag as NayTag;
+use Spatie\Html\Html;
 
 class HtmlTag extends RenderableRegistry
 {
