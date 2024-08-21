@@ -124,12 +124,9 @@ class HtmlTag extends RenderableRegistry
      */
     public function renderOpeningTag()
     {
-        /** @var \Collective\Html\HtmlBuilder $html */
-        $html = app('html');
-        return '<'
-            . $this->getTagName()
-            . $html->attributes($this->getAttributes())
-            . '>';
+        $html = app(Html::class);
+        $element = $html->element($this->getTagName())->attributes($this->getAttributes());
+        return (string) $element->open();
     }
 
     /**
@@ -139,7 +136,9 @@ class HtmlTag extends RenderableRegistry
      */
     public function renderClosingTag()
     {
-        return "</{$this->getTagName()}>";
+        $html = app(Html::class);
+        $element = $html->element($this->getTagName())->attributes($this->getAttributes());
+        return (string) $element->close();
     }
 
     /**

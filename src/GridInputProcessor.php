@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Log;
 use Input;
 use Request;
 use Form;
+use Spatie\Html\Facades\Html;
 
 /**
  * Class GridInputProcessor
@@ -78,7 +79,7 @@ class GridInputProcessor
         $key = $this->getKey();
         if (isset($this->input['sort'])) {
             foreach ($this->input['sort'] as $field => $direction) {
-                $html .= Form::hidden("{$key}[sort][$field]", $direction);
+                $html .= Html::hidden("{$key}[sort][$field]", $direction);
             }
         }
         return $html;
