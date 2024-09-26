@@ -126,16 +126,12 @@ class EloquentDataProvider extends DataProvider
 
     public function dateTimeRangeFilter($relationColumn, array $value)
     {
-        if (count($relationColumn) > 1) {
-            if ($this->src->getQuery()->from == $relationColumn[0]) {
-                $this->src->whereBetween($relationColumn[0] . '.' . $relationColumn[1], $value);
-            } else {
-                $this->src->whereHas($relationColumn[0], function ($query) use ($relationColumn, $value) {
-                    $query->whereBetween($relationColumn[1], $value);
-                });
-            }
-        } else {
-            $this->src->whereBetween($this->src->getQuery()->from . '.' . $relationColumn[0], $value);
+        if(count($relationColumn) > 1){
+            $this->src->whereHas($relationColumn[0], function ($query) use ($relationColumn, $value) {
+                $query->whereBetween($relationColumn[1], $value);
+            });
+        }else{
+            $this->src->whereBetween($relationColumn[0], $value);
         }
         return $this;
     }
