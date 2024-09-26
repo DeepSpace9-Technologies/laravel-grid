@@ -135,7 +135,7 @@ class EloquentDataProvider extends DataProvider
                 });
             }
         } else {
-            $this->src->whereBetween($relationColumn[0], $value);
+            $this->src->whereBetween($this->src->getQuery()->from . '.' . $relationColumn[0], $value);
         }
         return $this;
     }

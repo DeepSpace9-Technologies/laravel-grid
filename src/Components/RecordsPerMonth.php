@@ -64,7 +64,12 @@ class RecordsPerMonth extends RenderableComponent
     public function prepare()
     {
         if (is_array($this->getValue())) {
-            setcookie("columnName", $this->getValue()[0], time() + 60 * 60 * 24 * 7);
+            $columnName = explode('.', $this->getValue()[0]);
+            if (count($columnName) > 1) {
+                setcookie("columnName", $columnName[1], time() + 60 * 60 * 24 * 7);
+            } else {
+                setcookie("columnName", $columnName[0], time() + 60 * 60 * 24 * 7);
+            }
             $this->grid->getConfig()->getDataProvider()->setGridDefaultDateRangeFilter($this->getValue()[0], trim($this->getValue()[1]));
         } else {
             if (isset($_COOKIE["columnName"])) {
@@ -72,6 +77,5 @@ class RecordsPerMonth extends RenderableComponent
             }
 
         }
-
     }
 }
