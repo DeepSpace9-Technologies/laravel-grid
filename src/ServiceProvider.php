@@ -45,7 +45,7 @@ class ServiceProvider extends BaseServiceProvider
             ]);
             // Publish the config file
             $this->publishes([
-                $pkg_path . '/config/timezone.php' => config_path('timezone.php'),
+                $pkg_path . '/config/setting.php' => config_path('setting.php'),
             ], 'config');
         }
         if (!class_exists('Grids')) {
