@@ -43,6 +43,10 @@ class ServiceProvider extends BaseServiceProvider
             $this->publishes([
                 $views_path => base_path('resources/views/nayjest/grids')
             ]);
+            // Publish the config file
+            $this->publishes([
+                $pkg_path . '/config/timezone.php' => config_path('timezone.php'),
+            ], 'config');
         }
         if (!class_exists('Grids')) {
             class_alias('\\Nayjest\\Grids\\Grids', '\\Grids');
