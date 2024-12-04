@@ -3,6 +3,6 @@
 return [
     'timezone' => [
         'current_timezone' => 'Asia/Kolkata',
-        'selected_timezone' => 'IST'
+        'selected_timezone' => 'UTC'
     ]
 ];
