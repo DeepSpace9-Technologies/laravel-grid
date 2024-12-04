@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'timezone' => 'UTC',
+    'timezone' => [
+        'current_timezone' => 'Asia/Kolkata',
+        'selected_timezone' => 'IST'
+    ]
 ];

@@ -23,17 +23,17 @@ class FilterGridWithDateRange
 
     public function apply()
     {
-        $selectedTimeZone = config('grid_setting.timezone');
+        $timeZone = config('grid_setting.timezone');
         $appliedFilters = $this->grid->getConfig()->getDataProvider()->getGridDateRangeFilter();
         if (!empty($appliedFilters)) {
             $relationAndColumnName = explode('.', $appliedFilters[0]);
             if (is_numeric($appliedFilters[1])) {
-                $startDate = Carbon::now('Asia/Kolkata')->subMonths($appliedFilters[1])->startOfDay()->setTimezone($selectedTimeZone)->toDateTimeString();
-                $endDate = Carbon::now('Asia/Kolkata')->endOfDay()->setTimezone($selectedTimeZone)->toDateTimeString();
+                $startDate = Carbon::now($timeZone['current_timezone'])->subMonths($appliedFilters[1])->startOfDay()->setTimezone($timeZone['selected_timezone'])->toDateTimeString();
+                $endDate = Carbon::now($timeZone['current_timezone'])->endOfDay()->setTimezone($timeZone['selected_timezone'])->toDateTimeString();
             } else {
                 $dateRange = explode(" to ", $appliedFilters[1]);
-                $startDate = Carbon::parse($dateRange[0], 'Asia/Kolkata')->startOfDay()->setTimezone($selectedTimeZone)->toDateTimeString();
-                $endDate = Carbon::parse($dateRange[1], 'Asia/Kolkata')->endOfDay()->setTimezone($selectedTimeZone)->toDateTimeString();
+                $startDate = Carbon::parse($dateRange[0], $timeZone['current_timezone'])->startOfDay()->setTimezone($timeZone['selected_timezone'])->toDateTimeString();
+                $endDate = Carbon::parse($dateRange[1], $timeZone['current_timezone'])->endOfDay()->setTimezone($timeZone['selected_timezone'])->toDateTimeString();
             }
             $this->grid
                 ->getConfig()
