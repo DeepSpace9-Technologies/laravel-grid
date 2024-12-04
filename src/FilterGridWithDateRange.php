@@ -23,7 +23,7 @@ class FilterGridWithDateRange
 
     public function apply()
     {
-        $timeZone = config('setting.timezone');
+        $timeZone = config('grid_setting.timezone');
         $appliedFilters = $this->grid->getConfig()->getDataProvider()->getGridDateRangeFilter();
         if (!empty($appliedFilters)) {
             $relationAndColumnName = explode('.', $appliedFilters[0]);
