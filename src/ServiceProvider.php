@@ -45,7 +45,7 @@ class ServiceProvider extends BaseServiceProvider
             ]);
             // Publish the config file
             $this->publishes([
-                $pkg_path . '/config/setting.php' => config_path('setting.php'),
+                $pkg_path . '/config/grid_setting.php' => config_path('grid_setting.php'),
             ], 'config');
         }
         if (!class_exists('Grids')) {
