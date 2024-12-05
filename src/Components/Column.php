@@ -218,7 +218,7 @@ class Column
             return '<input class="select-checkbox" type="checkbox" name="selected[]" value="' . $obj->id . '" />';
         });
         $selectComponent = (new RenderFunc(function () {
-            return '<span style="width:100%; display:block;"><input class="select_all_checkbox" type="checkbox" /></span>';
+            return '<span style="width:100%; display:block;text-align: center;"><input class="select_all_checkbox" type="checkbox" /></span>';
         }))->setRenderSection("filters_row_column_{$this->columnName}");
         $filtersRow = $this->grid->getConfig()->getComponentByNameRecursive(FiltersRow::NAME);
         $filtersRow->addComponent($selectComponent);
