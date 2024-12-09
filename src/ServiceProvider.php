@@ -32,6 +32,8 @@ class ServiceProvider extends BaseServiceProvider
     {
         $pkg_path = dirname(__DIR__);
         $views_path = $pkg_path . '/resources/views';
+        $configFileName = "grid_setting.php";
+        $configFilePath = $pkg_path . '/config/grid_setting.php';
 
         # only for Laravel 4 & some of 5-dev
         if (version_compare(Application::VERSION, '5.0.0', '<')) {
@@ -45,9 +47,17 @@ class ServiceProvider extends BaseServiceProvider
             ]);
             // Publish the config file
             $this->publishes([
-                $pkg_path . '/config/grid_setting.php' => config_path('grid_setting.php'),
+                $configFilePath => config_path('grid_setting.php'),
             ], 'config');
         }
+
+        // Check if config file is published in the project; otherwise, merge package config
+        if (file_exists(config_path($configFileName))) {
+            $this->app['config']->set('grid_setting', require config_path($configFileName));
+        } else {
+            $this->mergeConfigFrom($configFilePath, 'grid_setting');
+        }
+
         if (!class_exists('Grids')) {
             class_alias('\\Nayjest\\Grids\\Grids', '\\Grids');
         }
