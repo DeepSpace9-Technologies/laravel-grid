@@ -301,7 +301,7 @@ class HtmlTag extends RenderableRegistry
         $rightTag = $this->createHtmlTag()->addClass(!empty($this->defaultDateRange) ? "col-xs-4 text-right" : "col-xs-6 text-right")
             ->addActions($this->actions)
             ->addResetButton()
-            ->addExcelExport('excel-data-' . date('d-m-Y-h-i-s'))
+//            ->addExcelExport('excel-data-' . date('d-m-Y-h-i-s'))
             ->addCsvExport('csv-data-' . date('d-m-Y-h-i-s'));
         // ->addColumnsHider();
 
